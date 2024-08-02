@@ -1,5 +1,6 @@
 package com.devtam.websocket.controller;
 
+import com.devtam.websocket.var.MessageType;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -25,6 +26,8 @@ public class ChatController {
     ) {
         // Add username in web socket session
         headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
+        chatMessage.setMessageType(MessageType.JOIN);
+        chatMessage.setContent(chatMessage.getSender() + " joined the chat");
         return chatMessage;
     }
 }
